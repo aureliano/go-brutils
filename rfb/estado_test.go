@@ -1,6 +1,10 @@
 package rfb
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 func TestNewEstado(t *testing.T) {
 	type testCase struct {
@@ -34,19 +38,18 @@ func TestNewEstado(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			actual := newEstado(tc.input)
-			if !estadosSaoIguais(tc.expected, actual) {
-				t.Errorf("expected %v, got %v", tc.expected, actual)
-			}
+			assert.True(t, estadosSaoIguais(tc.expected, actual))
 		})
 	}
 }
 
 func estadosSaoIguais(e1, e2 *Estado) bool {
-	if e1 == nil && e2 == nil {
+	switch {
+	case e1 == nil && e2 == nil:
 		return true
-	} else if (e1 != nil && e2 == nil) || (e1 == nil && e2 != nil) {
+	case (e1 != nil && e2 == nil) || (e1 == nil && e2 != nil):
 		return false
-	} else {
+	default:
 		return (e1.Nome == e2.Nome) && (e1.UF == e2.UF) && (e1.RegiaoFiscal == e2.RegiaoFiscal)
 	}
 }
