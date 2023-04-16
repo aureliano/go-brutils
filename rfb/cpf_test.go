@@ -11,6 +11,7 @@ func TestGerarCPF(t *testing.T) {
 	mpGenRandomDecimalUnit = genRandomDecimalUnit
 
 	cpf, _ := gerarCPF()
+	fmt.Println(cpf)
 	assert.Regexp(t, `^\d{11}$`, cpf)
 }
 
@@ -46,6 +47,14 @@ func TestGerarCPFParaUFErroCodRecFiscal(t *testing.T) {
 	assert.ErrorIs(t, err, ErrGeracaoCPF)
 
 	mpGerarCodigoRegiaoFiscal = gerarCodigoRegiaoFiscal
+}
+
+func TestNewCPF(t *testing.T) {
+	cpf := newCPF(1234)
+	assert.Equal(t, CPF("00000123431"), cpf)
+
+	cpf = newCPF(12345678900)
+	assert.Equal(t, CPF("12345678906"), cpf)
 }
 
 func TestGerarNumeroBaseErro(t *testing.T) {

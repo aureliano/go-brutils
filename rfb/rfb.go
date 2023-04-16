@@ -16,3 +16,7 @@ func GerarCPF() (CPF, error) {
 func GerarCPFParaUF(uf string) (CPF, error) {
 	return gerarCPFParaUF(uf)
 }
+
+func NewCPF(numbBase uint) CPF {
+	return newCPF(numbBase)
+}

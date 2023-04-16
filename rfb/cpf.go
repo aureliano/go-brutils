@@ -3,8 +3,10 @@ package rfb
 import (
 	"bytes"
 	"crypto/rand"
+	"fmt"
 	"math/big"
 	"strconv"
+	"strings"
 )
 
 type CPF string
@@ -30,6 +32,30 @@ func gerarCPFParaUF(uf string) (CPF, error) {
 
 	dv1, dv2 := gerarDigitosVerificadores(base, rf)
 
+	return CPF(writeCPF(base, rf, dv1, dv2)), nil
+}
+
+func newCPF(numBase uint) CPF {
+	const maxDigitos = 9
+	base := fmt.Sprintf("%09d", numBase)[:maxDigitos]
+	ibase := make([]int, maxDigitos-1)
+	rf := -1
+
+	for i, n := range strings.Split(base, "") {
+		v, _ := strconv.Atoi(n)
+		if i == maxDigitos-1 {
+			rf = v
+		} else {
+			ibase[i] = v
+		}
+	}
+
+	dv1, dv2 := gerarDigitosVerificadores(ibase, rf)
+
+	return CPF(writeCPF(ibase, rf, dv1, dv2))
+}
+
+func writeCPF(base []int, rf, dv1, dv2 int) string {
 	var b bytes.Buffer
 	for _, d := range base {
 		b.WriteString(strconv.Itoa(d))
@@ -39,7 +65,7 @@ func gerarCPFParaUF(uf string) (CPF, error) {
 	b.WriteString(strconv.Itoa(dv1))
 	b.WriteString(strconv.Itoa(dv2))
 
-	return CPF(b.String()), nil
+	return b.String()
 }
 
 func gerarNumeroBase() ([]int, error) {

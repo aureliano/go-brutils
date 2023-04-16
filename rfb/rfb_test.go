@@ -41,3 +41,8 @@ func TestGerarCPFParaUf(t *testing.T) {
 	_, err = rfb.GerarCPFParaUF("br")
 	assert.True(t, errors.Is(err, rfb.ErrUFDesconhecida))
 }
+
+func TestNewCPF(t *testing.T) {
+	cpf := rfb.NewCPF(1234)
+	assert.Equal(t, rfb.CPF("00000123431"), cpf)
+}
