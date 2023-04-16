@@ -8,3 +8,11 @@ func NewEstado(uf string) *Estado {
 
 	return e
 }
+
+func GerarCPF() (CPF, error) {
+	return gerarCPF()
+}
+
+func GerarCPFParaUF(uf string) (CPF, error) {
+	return gerarCPFParaUF(uf)
+}

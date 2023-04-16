@@ -1,6 +1,7 @@
 package rfb_test
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/aureliano/go-brutils/rfb"
@@ -24,4 +25,19 @@ func TestNewEstado(t *testing.T) {
 	assert.Equal(t, "MG", e.UF)
 	assert.Equal(t, "Minas Gerais", e.Nome)
 	assert.Equal(t, 6, e.RegiaoFiscal)
+}
+
+func TestGerarCPF(t *testing.T) {
+	cpf, err := rfb.GerarCPF()
+	assert.Nil(t, err)
+	assert.Regexp(t, `^\d{11}$`, cpf)
+}
+
+func TestGerarCPFParaUf(t *testing.T) {
+	cpf, err := rfb.GerarCPFParaUF("mg")
+	assert.Nil(t, err)
+	assert.Regexp(t, `^\d{11}$`, cpf)
+
+	_, err = rfb.GerarCPFParaUF("br")
+	assert.True(t, errors.Is(err, rfb.ErrUFDesconhecida))
 }
