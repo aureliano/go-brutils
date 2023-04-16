@@ -44,5 +44,5 @@ func TestGerarCPFParaUf(t *testing.T) {
 
 func TestNewCPF(t *testing.T) {
 	cpf := rfb.NewCPF(1234)
-	assert.Equal(t, rfb.CPF("00000123431"), cpf)
+	assert.Equal(t, rfb.CPF("00000123439"), cpf)
 }

@@ -129,7 +129,7 @@ func gerarDigitosVerificadores(base []int, rf int) (int, int) {
 		seed := cpfSize - i
 		sum += d * seed
 	}
-	sum += rf*lastPos + 1
+	sum += rf * (lastPos + 1)
 	sum += dv1 * lastPos
 
 	dv2 := (sum * ten) % cpfSize
