@@ -55,6 +55,35 @@ func newCPF(numBase uint) CPF {
 	return CPF(writeCPF(ibase, rf, dv1, dv2))
 }
 
+func cpfValido(cpf CPF) bool {
+	const cpfSize = 11
+	const maxNumBase = 9
+
+	if len(cpf) != cpfSize {
+		return false
+	}
+
+	strCpf := string(cpf)
+	base := make([]int, maxNumBase-1)
+	rf := -1
+
+	for i, n := range strings.Split(strCpf, "")[:maxNumBase] {
+		v, _ := strconv.Atoi(n)
+		if i == maxNumBase-1 {
+			rf = v
+		} else {
+			base[i] = v
+		}
+	}
+
+	dv1, dv2 := gerarDigitosVerificadores(base, rf)
+
+	edv1, _ := strconv.Atoi(strCpf[9:10])
+	edv2, _ := strconv.Atoi(strCpf[10:11])
+
+	return (edv1 == dv1) && (edv2 == dv2)
+}
+
 func writeCPF(base []int, rf, dv1, dv2 int) string {
 	var b bytes.Buffer
 	for _, d := range base {

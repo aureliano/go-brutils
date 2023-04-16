@@ -119,6 +119,22 @@ func TestNewCPF(t *testing.T) {
 	}
 }
 
+func TestCpfValido(t *testing.T) {
+	assert.False(t, cpfValido("123"))
+	assert.False(t, cpfValido("123987987988878"))
+	assert.False(t, cpfValido("12345678901"))
+	assert.False(t, cpfValido("78545214665"))
+	assert.False(t, cpfValido("00475223690"))
+	assert.False(t, cpfValido("87554128963"))
+	assert.False(t, cpfValido("11470025308"))
+
+	assert.True(t, cpfValido("92546172107"))
+	assert.True(t, cpfValido("60658101188"))
+	assert.True(t, cpfValido("10555710866"))
+	assert.True(t, cpfValido("51649818823"))
+	assert.True(t, cpfValido("58325295538"))
+}
+
 func TestGerarNumeroBaseErro(t *testing.T) {
 	mpGenRandomDecimalUnit = func() (int, error) { return -1, fmt.Errorf("any error") }
 
