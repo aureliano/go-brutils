@@ -9,14 +9,14 @@ import (
 )
 
 func TestGerarCPF(t *testing.T) {
-	mpGenRandomDecimalUnit = number.GerarUnidadeDecimal
+	mpGerarUnidadeDecimalCPF = number.GerarUnidadeDecimal
 
 	cpf, _ := gerarCPF()
 	assert.Regexp(t, cpfNumeralRegex, cpf)
 }
 
 func TestGerarCPFParaUF(t *testing.T) {
-	mpGenRandomDecimalUnit = number.GerarUnidadeDecimal
+	mpGerarUnidadeDecimalCPF = number.GerarUnidadeDecimal
 
 	cpf, _ := gerarCPFParaUF("")
 	assert.Regexp(t, cpfNumeralRegex, cpf)
@@ -29,7 +29,7 @@ func TestGerarCPFParaUF(t *testing.T) {
 }
 
 func TestGerarCPFParaUFErroGeracaoNumBase(t *testing.T) {
-	mpGenRandomDecimalUnit = number.GerarUnidadeDecimal
+	mpGerarUnidadeDecimalCPF = number.GerarUnidadeDecimal
 	mpGerarNumeroBaseCPF = func() ([]int, error) { return nil, ErrGeracaoCPF }
 
 	_, err := gerarCPFParaUF("mg")
@@ -39,7 +39,7 @@ func TestGerarCPFParaUFErroGeracaoNumBase(t *testing.T) {
 }
 
 func TestGerarCPFParaUFErroCodRecFiscal(t *testing.T) {
-	mpGenRandomDecimalUnit = number.GerarUnidadeDecimal
+	mpGerarUnidadeDecimalCPF = number.GerarUnidadeDecimal
 	mpGerarNumeroBaseCPF = gerarNumeroBaseCPF
 	mpGerarCodigoRegiaoFiscal = func(uf string) (int, error) { return -1, ErrGeracaoCPF }
 
@@ -164,25 +164,25 @@ func TestDesformatarCPF(t *testing.T) {
 	assert.Equal(t, "123456789123", cpf)
 }
 
-func TestGerarNumeroBaseErro(t *testing.T) {
-	mpGenRandomDecimalUnit = func() (int, error) { return -1, fmt.Errorf("any error") }
+func TestGerarNumeroBaseCPFErro(t *testing.T) {
+	mpGerarUnidadeDecimalCPF = func() (int, error) { return -1, fmt.Errorf("any error") }
 
 	_, err := gerarNumeroBaseCPF()
 	assert.ErrorIs(t, err, ErrGeracaoCPF)
 
-	mpGenRandomDecimalUnit = number.GerarUnidadeDecimal
+	mpGerarUnidadeDecimalCPF = number.GerarUnidadeDecimal
 }
 
 func TestGerarCodigoRegiaoFiscalErro(t *testing.T) {
-	mpGenRandomDecimalUnit = func() (int, error) { return -1, fmt.Errorf("any error") }
+	mpGerarUnidadeDecimalCPF = func() (int, error) { return -1, fmt.Errorf("any error") }
 
 	_, err := gerarCodigoRegiaoFiscal("")
 	assert.ErrorIs(t, err, ErrGeracaoCPF)
 
-	mpGenRandomDecimalUnit = number.GerarUnidadeDecimal
+	mpGerarUnidadeDecimalCPF = number.GerarUnidadeDecimal
 }
 
-func TestGerarDigitosVerificadores(t *testing.T) {
+func TestGerarDigitosVerificadoresCPF(t *testing.T) {
 	dv1, dv2 := gerarDigitosVerificadoresCPF([]int{4, 9, 9, 9, 9, 9, 9, 9}, 6)
 	assert.Equal(t, 0, dv1)
 	assert.Equal(t, 3, dv2)

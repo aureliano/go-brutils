@@ -12,7 +12,7 @@ import (
 
 type CPF string
 
-var mpGenRandomDecimalUnit = number.GerarUnidadeDecimal
+var mpGerarUnidadeDecimalCPF = number.GerarUnidadeDecimal
 var mpGerarNumeroBaseCPF = gerarNumeroBaseCPF
 var mpGerarCodigoRegiaoFiscal = gerarCodigoRegiaoFiscal
 var cpfNumeralRegex = regexp.MustCompile(`^\d{11}$`)
@@ -102,7 +102,7 @@ func gerarNumeroBaseCPF() ([]int, error) {
 	num := make([]int, digitos)
 
 	for i := 0; i < digitos; i++ {
-		n, err := mpGenRandomDecimalUnit()
+		n, err := mpGerarUnidadeDecimalCPF()
 		if err != nil {
 			return nil, ErrGeracaoCPF
 		}
@@ -115,7 +115,7 @@ func gerarNumeroBaseCPF() ([]int, error) {
 
 func gerarCodigoRegiaoFiscal(uf string) (int, error) {
 	if uf == "" {
-		n, err := mpGenRandomDecimalUnit()
+		n, err := mpGerarUnidadeDecimalCPF()
 		if err != nil {
 			return -1, ErrGeracaoCPF
 		}
