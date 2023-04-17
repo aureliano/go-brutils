@@ -7,6 +7,8 @@ import (
 	"math/big"
 	"strconv"
 	"strings"
+
+	"github.com/aureliano/go-brutils/text"
 )
 
 type CPF string
@@ -86,12 +88,18 @@ func cpfValido(cpf CPF) bool {
 }
 
 func formatarCPF(cpf CPF) string {
+	scpf := string(cpf)
+
 	if len(cpf) != cpfSize {
-		return ""
+		return scpf
 	}
 
-	scpf := string(cpf)
 	return fmt.Sprintf("%s.%s.%s-%s", scpf[0:3], scpf[3:6], scpf[6:9], scpf[9:11])
+}
+
+func desformatarCPF(cpf CPF) string {
+	scpf := string(cpf)
+	return text.ExtractNumber(scpf)
 }
 
 func writeCPF(base []int, rf, dv1, dv2 int) string {

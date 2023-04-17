@@ -143,10 +143,24 @@ func TestFormatarCPF(t *testing.T) {
 	assert.Equal(t, "004.752.236-90", fmtd)
 
 	fmtd = formatarCPF("12")
-	assert.Empty(t, fmtd)
+	assert.Equal(t, "12", fmtd)
 
 	fmtd = formatarCPF("123456789123")
-	assert.Empty(t, fmtd)
+	assert.Equal(t, "123456789123", fmtd)
+}
+
+func TestDesformatarCPF(t *testing.T) {
+	cpf := desformatarCPF("925.461.721-07")
+	assert.Equal(t, "92546172107", cpf)
+
+	cpf = desformatarCPF("004.752.236-90")
+	assert.Equal(t, "00475223690", cpf)
+
+	cpf = formatarCPF("12")
+	assert.Equal(t, "12", cpf)
+
+	cpf = formatarCPF("123456789123")
+	assert.Equal(t, "123456789123", cpf)
 }
 
 func TestGerarNumeroBaseErro(t *testing.T) {
