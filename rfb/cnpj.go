@@ -2,8 +2,10 @@ package rfb
 
 import (
 	"bytes"
+	"fmt"
 	"regexp"
 	"strconv"
+	"strings"
 
 	"github.com/aureliano/go-brutils/number"
 )
@@ -26,6 +28,15 @@ func gerarCNPJ() (CNPJ, error) {
 	dv1, dv2 := gerarDigitosVerificadoresCNPJ(base)
 
 	return CNPJ(writeCNPJ(base, dv1, dv2)), nil
+}
+
+func newCNPJ(numBase uint) CNPJ {
+	base := fmt.Sprintf("%012d", numBase)[:cnpjNumBaseSize]
+	ibase := recuperarNumeroBaseCNPJ(base)
+
+	dv1, dv2 := gerarDigitosVerificadoresCNPJ(ibase)
+
+	return CNPJ(writeCNPJ(ibase, dv1, dv2))
 }
 
 func writeCNPJ(base []int, dv1, dv2 int) string {
@@ -100,4 +111,15 @@ func gerarDigitosVerificadoresCNPJ(base []int) (int, int) {
 	}
 
 	return dv1, dv2
+}
+
+func recuperarNumeroBaseCNPJ(cnpj string) []int {
+	base := make([]int, cnpjNumBaseSize)
+
+	for i, n := range strings.Split(cnpj, "")[:cnpjNumBaseSize] {
+		v, _ := strconv.Atoi(n)
+		base[i] = v
+	}
+
+	return base
 }

@@ -42,7 +42,7 @@ func gerarCPFParaUF(uf string) (CPF, error) {
 
 func newCPF(numBase uint) CPF {
 	base := fmt.Sprintf("%09d", numBase)[:cpfNumBaseSize]
-	ibase, rf := recuperarNumeroBase(base)
+	ibase, rf := recuperarNumeroBaseCPF(base)
 
 	dv1, dv2 := gerarDigitosVerificadoresCPF(ibase, rf)
 
@@ -55,7 +55,7 @@ func cpfValido(cpf CPF) bool {
 	}
 
 	strCpf := string(cpf)
-	base, rf := recuperarNumeroBase(strCpf)
+	base, rf := recuperarNumeroBaseCPF(strCpf)
 
 	dv1, dv2 := gerarDigitosVerificadoresCPF(base, rf)
 
@@ -168,7 +168,7 @@ func gerarDigitosVerificadoresCPF(base []int, rf int) (int, int) {
 	return dv1, dv2
 }
 
-func recuperarNumeroBase(cpf string) ([]int, int) {
+func recuperarNumeroBaseCPF(cpf string) ([]int, int) {
 	base := make([]int, cpfNumBaseSize-1)
 	rf := -1
 

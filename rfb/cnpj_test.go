@@ -25,6 +25,29 @@ func TestGerarCNPJErroGeracaoNumBase(t *testing.T) {
 	mpGerarNumeroBaseCNPJ = gerarNumeroBaseCNPJ
 }
 
+func TestNewCNPJ(t *testing.T) {
+	type testCase struct {
+		name     string
+		input    uint
+		expected CNPJ
+	}
+	testCases := []testCase{
+		{name: "Matriz com menos dígitos", input: 90060001, expected: "00009006000120"},
+		{name: "Matriz com todos os dígitos", input: 111300130001, expected: "11130013000100"},
+		{name: "Filial unidade", input: 981123280002, expected: "98112328000285"},
+		{name: "Filial dezena", input: 793805000021, expected: "79380500002108"},
+		{name: "Filial centena", input: 693451290321, expected: "69345129032170"},
+		{name: "Filial milhar", input: 564599554321, expected: "56459955432112"},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			actual := newCNPJ(tc.input)
+			assert.Equal(t, tc.expected, actual)
+		})
+	}
+}
+
 func TestGerarNumeroBaseCNPJErro(t *testing.T) {
 	mpGerarUnidadeDecimalCNPJ = func() (int, error) { return -1, fmt.Errorf("any error") }
 

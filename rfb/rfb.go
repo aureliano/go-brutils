@@ -39,7 +39,7 @@ func (cpf CPF) NumeroBase() uint {
 		return 0
 	}
 
-	base, rf := recuperarNumeroBase(string(cpf))
+	base, rf := recuperarNumeroBaseCPF(string(cpf))
 
 	var b bytes.Buffer
 	for _, d := range base {
