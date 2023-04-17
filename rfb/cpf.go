@@ -15,6 +15,8 @@ var mpGenRandomDecimalUnit = genRandomDecimalUnit
 var mpGerarNumeroBase = gerarNumeroBase
 var mpGerarCodigoRegiaoFiscal = gerarCodigoRegiaoFiscal
 
+const cpfSize = 11
+
 func gerarCPF() (CPF, error) {
 	return gerarCPFParaUF("")
 }
@@ -56,7 +58,6 @@ func newCPF(numBase uint) CPF {
 }
 
 func cpfValido(cpf CPF) bool {
-	const cpfSize = 11
 	const maxNumBase = 9
 
 	if len(cpf) != cpfSize {
@@ -82,6 +83,15 @@ func cpfValido(cpf CPF) bool {
 	edv2, _ := strconv.Atoi(strCpf[10:11])
 
 	return (edv1 == dv1) && (edv2 == dv2)
+}
+
+func formatarCPF(cpf CPF) string {
+	if len(cpf) != cpfSize {
+		return ""
+	}
+
+	scpf := string(cpf)
+	return fmt.Sprintf("%s.%s.%s-%s", scpf[0:3], scpf[3:6], scpf[6:9], scpf[9:11])
 }
 
 func writeCPF(base []int, rf, dv1, dv2 int) string {
@@ -136,7 +146,6 @@ func gerarDigitosVerificadores(base []int, rf int) (int, int) {
 	sum := 0
 	const baseSize = 8
 	const maxUnit = 9
-	const cpfSize = 11
 	const ten = 10
 	const lastPos = 2
 

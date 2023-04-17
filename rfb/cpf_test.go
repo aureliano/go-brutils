@@ -135,6 +135,20 @@ func TestCpfValido(t *testing.T) {
 	assert.True(t, cpfValido("58325295538"))
 }
 
+func TestFormatarCPF(t *testing.T) {
+	fmtd := formatarCPF("92546172107")
+	assert.Equal(t, "925.461.721-07", fmtd)
+
+	fmtd = formatarCPF("00475223690")
+	assert.Equal(t, "004.752.236-90", fmtd)
+
+	fmtd = formatarCPF("12")
+	assert.Empty(t, fmtd)
+
+	fmtd = formatarCPF("123456789123")
+	assert.Empty(t, fmtd)
+}
+
 func TestGerarNumeroBaseErro(t *testing.T) {
 	mpGenRandomDecimalUnit = func() (int, error) { return -1, fmt.Errorf("any error") }
 
