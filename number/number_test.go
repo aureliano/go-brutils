@@ -1,9 +1,9 @@
-package text_test
+package number_test
 
 import (
 	"testing"
 
-	"github.com/aureliano/go-brutils/text"
+	"github.com/aureliano/go-brutils/number"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -23,7 +23,7 @@ func TestExtractNumber(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			actual := text.ExtractNumber(tc.input)
+			actual := number.ExtractNumber(tc.input)
 			assert.Equal(t, tc.expected, actual)
 		})
 	}

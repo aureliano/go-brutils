@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/aureliano/go-brutils/text"
+	"github.com/aureliano/go-brutils/number"
 )
 
 type CPF string
@@ -83,7 +83,7 @@ func formatarCPF(cpf CPF) string {
 
 func desformatarCPF(cpf CPF) string {
 	scpf := string(cpf)
-	return text.ExtractNumber(scpf)
+	return number.ExtractNumber(scpf)
 }
 
 func writeCPF(base []int, rf, dv1, dv2 int) string {
