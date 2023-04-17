@@ -157,10 +157,10 @@ func TestDesformatarCPF(t *testing.T) {
 	cpf = desformatarCPF("004.752.236-90")
 	assert.Equal(t, "00475223690", cpf)
 
-	cpf = formatarCPF("12")
+	cpf = desformatarCPF("12")
 	assert.Equal(t, "12", cpf)
 
-	cpf = formatarCPF("123456789123")
+	cpf = desformatarCPF("123456789123")
 	assert.Equal(t, "123456789123", cpf)
 }
 

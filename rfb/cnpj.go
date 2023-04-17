@@ -69,6 +69,11 @@ func formatarCNPJ(cnpj CNPJ) string {
 	return fmt.Sprintf("%s.%s.%s/%s-%s", scnpj[0:2], scnpj[2:5], scnpj[5:8], scnpj[8:12], scnpj[12:14])
 }
 
+func desformatarCNPJ(cnpj CNPJ) string {
+	scnpj := string(cnpj)
+	return number.ExtrairNumeros(scnpj)
+}
+
 func writeCNPJ(base []int, dv1, dv2 int) string {
 	var b bytes.Buffer
 	for _, d := range base {
