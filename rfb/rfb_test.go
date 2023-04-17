@@ -34,11 +34,13 @@ func TestGerarCPF(t *testing.T) {
 }
 
 func TestGerarCPFParaUf(t *testing.T) {
-	cpf, err := rfb.GerarCPFParaUF("mg")
+	uf := &rfb.Estado{UF: "mg"}
+	cpf, err := rfb.GerarCPFParaUF(uf)
 	assert.Nil(t, err)
 	assert.Regexp(t, `^\d{11}$`, cpf)
 
-	_, err = rfb.GerarCPFParaUF("br")
+	uf.UF = "br"
+	_, err = rfb.GerarCPFParaUF(uf)
 	assert.True(t, errors.Is(err, rfb.ErrUFDesconhecida))
 }
 
@@ -87,4 +89,25 @@ func TestDigitosVerificadores(t *testing.T) {
 
 	assert.Equal(t, edv1, dv1)
 	assert.Equal(t, edv2, dv2)
+}
+
+func TestValido(t *testing.T) {
+	cpf := rfb.CPF("12345678954")
+	assert.False(t, cpf.Valido())
+
+	cpf = rfb.CPF("")
+	assert.False(t, cpf.Valido())
+
+	cpf = rfb.CPF("93976464279")
+	assert.True(t, cpf.Valido())
+}
+
+func TestFormatado(t *testing.T) {
+	cpf := rfb.CPF("12345678954")
+	assert.Equal(t, "123.456.789-54", cpf.Formatado())
+}
+
+func TestDesformatado(t *testing.T) {
+	cpf := rfb.CPF("123.456.789-54")
+	assert.Equal(t, "12345678954", cpf.Desformatado())
 }

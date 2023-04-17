@@ -8,7 +8,6 @@ import (
 type CPFInt interface {
 	NumeroBase() uint
 	DigitosVerificadores() (int, int)
-	Estado() *Estado
 	Valido() bool
 	Formatado() string
 	Desformatado() string
@@ -27,8 +26,8 @@ func GerarCPF() (CPF, error) {
 	return gerarCPF()
 }
 
-func GerarCPFParaUF(uf string) (CPF, error) {
-	return gerarCPFParaUF(uf)
+func GerarCPFParaUF(uf *Estado) (CPF, error) {
+	return gerarCPFParaUF(uf.UF)
 }
 
 func NewCPF(numbBase uint) CPF {
@@ -64,4 +63,16 @@ func (cpf CPF) DigitosVerificadores() (int, int) {
 	dv2, _ := strconv.Atoi(scpf[10:11])
 
 	return dv1, dv2
+}
+
+func (cpf CPF) Valido() bool {
+	return cpfValido(cpf)
+}
+
+func (cpf CPF) Formatado() string {
+	return formatarCPF(cpf)
+}
+
+func (cpf CPF) Desformatado() string {
+	return desformatarCPF(cpf)
 }
