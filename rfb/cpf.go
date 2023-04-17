@@ -16,6 +16,7 @@ var mpGerarUnidadeDecimalCPF = number.GerarUnidadeDecimal
 var mpGerarNumeroBaseCPF = gerarNumeroBaseCPF
 var mpGerarCodigoRegiaoFiscal = gerarCodigoRegiaoFiscal
 var cpfNumeralRegex = regexp.MustCompile(`^\d{11}$`)
+var cpfFormatadoRegex = regexp.MustCompile(`^\d{3}\.\d{3}\.\d{3}-\d{2}$`)
 
 const cpfSize = 11
 const cpfNumBaseSize = 9
@@ -47,6 +48,19 @@ func newCPF(numBase uint) CPF {
 	dv1, dv2 := gerarDigitosVerificadoresCPF(ibase, rf)
 
 	return CPF(writeCPF(ibase, rf, dv1, dv2))
+}
+
+func newCPFFromStr(str string) (CPF, error) {
+	if cpfFormatadoRegex.MatchString(str) {
+		nums := number.ExtrairNumeros(str)
+		return CPF(nums), nil
+	}
+
+	if !cpfNumeral(CPF(str)) {
+		return "", ErrCPFInvalido
+	}
+
+	return CPF(str), nil
 }
 
 func cpfValido(cpf CPF) bool {

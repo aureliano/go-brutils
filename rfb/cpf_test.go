@@ -120,6 +120,30 @@ func TestNewCPF(t *testing.T) {
 	}
 }
 
+func TestNewCPFFromStr(t *testing.T) {
+	type testCase struct {
+		name     string
+		input    string
+		expected CPF
+	}
+	testCases := []testCase{
+		{name: "CPF sem formatação", input: "93976464279", expected: "93976464279"},
+		{name: "CPF com formatação", input: "042.646.692-60", expected: "04264669260"},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			actual, _ := newCPFFromStr(tc.input)
+			assert.Equal(t, tc.expected, actual)
+		})
+	}
+}
+
+func TestNewCPFFromStrErro(t *testing.T) {
+	_, err := newCPFFromStr("123")
+	assert.ErrorIs(t, err, ErrCPFInvalido)
+}
+
 func TestCpfValido(t *testing.T) {
 	assert.False(t, cpfValido("123"))
 	assert.False(t, cpfValido("123987987988878"))
