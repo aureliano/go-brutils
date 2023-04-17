@@ -39,6 +39,26 @@ func newCNPJ(numBase uint) CNPJ {
 	return CNPJ(writeCNPJ(ibase, dv1, dv2))
 }
 
+func cnpjValido(cnpj CNPJ) bool {
+	if !cnpjNumeral(cnpj) {
+		return false
+	}
+
+	strCnpj := string(cnpj)
+	base := recuperarNumeroBaseCNPJ(strCnpj)
+
+	dv1, dv2 := gerarDigitosVerificadoresCNPJ(base)
+
+	edv1, _ := strconv.Atoi(strCnpj[12:13])
+	edv2, _ := strconv.Atoi(strCnpj[13:14])
+
+	return (edv1 == dv1) && (edv2 == dv2)
+}
+
+func cnpjNumeral(cnpj CNPJ) bool {
+	return cnpjNumeralRegex.MatchString(string(cnpj))
+}
+
 func writeCNPJ(base []int, dv1, dv2 int) string {
 	var b bytes.Buffer
 	for _, d := range base {

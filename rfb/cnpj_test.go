@@ -48,6 +48,22 @@ func TestNewCNPJ(t *testing.T) {
 	}
 }
 
+func TestCnpjValido(t *testing.T) {
+	assert.False(t, cnpjValido("123"))
+	assert.False(t, cnpjValido("123987987988878"))
+	assert.False(t, cnpjValido("12345678901452"))
+	assert.False(t, cnpjValido("78545214665124"))
+	assert.False(t, cnpjValido("00475223690740"))
+	assert.False(t, cnpjValido("87554128963638"))
+	assert.False(t, cnpjValido("11470025308552"))
+
+	assert.True(t, cnpjValido("56459955000166"))
+	assert.True(t, cnpjValido("40386877000187"))
+	assert.True(t, cnpjValido("19733753000134"))
+	assert.True(t, cnpjValido("65004940000102"))
+	assert.True(t, cnpjValido("60696837000149"))
+}
+
 func TestGerarNumeroBaseCNPJErro(t *testing.T) {
 	mpGerarUnidadeDecimalCNPJ = func() (int, error) { return -1, fmt.Errorf("any error") }
 
