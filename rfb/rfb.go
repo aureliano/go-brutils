@@ -34,6 +34,10 @@ func NewCPF(numbBase uint) CPF {
 	return newCPF(numbBase)
 }
 
+func NewCPFFromStr(str string) (CPF, error) {
+	return newCPFFromStr(str)
+}
+
 func (cpf CPF) NumeroBase() uint {
 	if !cpfNumeral(cpf) {
 		return 0
@@ -83,6 +87,10 @@ func GerarCNPJ() (CNPJ, error) {
 
 func NewCNPJ(numbBase uint) CNPJ {
 	return newCNPJ(numbBase)
+}
+
+func NewCNPJFromStr(str string) (CNPJ, error) {
+	return newCNPJFromStr(str)
 }
 
 func (cnpj CNPJ) NumeroBase() uint {

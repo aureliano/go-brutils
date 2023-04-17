@@ -49,6 +49,11 @@ func TestNewCPF(t *testing.T) {
 	assert.Equal(t, rfb.CPF("00000123439"), cpf)
 }
 
+func TestNewCPFFromStr(t *testing.T) {
+	cpf, _ := rfb.NewCPFFromStr("12345678910")
+	assert.Equal(t, rfb.CPF("12345678910"), cpf)
+}
+
 func TestNumeroBaseCPF(t *testing.T) {
 	cpf := rfb.CPF("12345678900")
 	expected := uint(123456789)
@@ -121,6 +126,11 @@ func TestGerarCNPJ(t *testing.T) {
 func TestNewCNPJ(t *testing.T) {
 	cnpj := rfb.NewCNPJ(1234)
 	assert.Equal(t, rfb.CNPJ("00000000123439"), cnpj)
+}
+
+func TestNewCNPJFromStr(t *testing.T) {
+	cnpj, _ := rfb.NewCNPJFromStr("12345678901234")
+	assert.Equal(t, rfb.CNPJ("12345678901234"), cnpj)
 }
 
 func TestNumeroBaseCNPJ(t *testing.T) {
