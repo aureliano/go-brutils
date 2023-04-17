@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-type CPFInt interface {
+type NIRFB interface {
 	NumeroBase() uint
 	DigitosVerificadores() (int, int)
 	Valido() bool
@@ -75,4 +75,12 @@ func (cpf CPF) Formatado() string {
 
 func (cpf CPF) Desformatado() string {
 	return desformatarCPF(cpf)
+}
+
+func GerarCNPJ() (CNPJ, error) {
+	return gerarCNPJ()
+}
+
+func NewCNPJ(numbBase uint) CNPJ {
+	return newCNPJ(numbBase)
 }

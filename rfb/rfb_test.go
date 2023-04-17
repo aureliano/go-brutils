@@ -111,3 +111,14 @@ func TestDesformatado(t *testing.T) {
 	cpf := rfb.CPF("123.456.789-54")
 	assert.Equal(t, "12345678954", cpf.Desformatado())
 }
+
+func TestGerarCNPJ(t *testing.T) {
+	cnpj, err := rfb.GerarCNPJ()
+	assert.Nil(t, err)
+	assert.Regexp(t, `^\d{14}$`, cnpj)
+}
+
+func TestNewCNPJ(t *testing.T) {
+	cnpj := rfb.NewCNPJ(1234)
+	assert.Equal(t, rfb.CNPJ("00000000123439"), cnpj)
+}
