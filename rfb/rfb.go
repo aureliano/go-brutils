@@ -84,3 +84,45 @@ func GerarCNPJ() (CNPJ, error) {
 func NewCNPJ(numbBase uint) CNPJ {
 	return newCNPJ(numbBase)
 }
+
+func (cnpj CNPJ) NumeroBase() uint {
+	if !cnpjNumeral(cnpj) {
+		return 0
+	}
+
+	base := recuperarNumeroBaseCNPJ(string(cnpj))
+
+	var b bytes.Buffer
+	for _, d := range base {
+		b.WriteString(strconv.Itoa(d))
+	}
+
+	num, _ := strconv.Atoi(b.String())
+
+	return uint(num)
+}
+
+func (cnpj CNPJ) DigitosVerificadores() (int, int) {
+	if !cnpjNumeral(cnpj) {
+		return -1, -1
+	}
+
+	scnpj := string(cnpj)
+
+	dv1, _ := strconv.Atoi(scnpj[12:13])
+	dv2, _ := strconv.Atoi(scnpj[13:14])
+
+	return dv1, dv2
+}
+
+func (cnpj CNPJ) Valido() bool {
+	return cnpjValido(cnpj)
+}
+
+func (cnpj CNPJ) Formatado() string {
+	return formatarCNPJ(cnpj)
+}
+
+func (cnpj CNPJ) Desformatado() string {
+	return desformatarCNPJ(cnpj)
+}
