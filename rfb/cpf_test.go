@@ -4,18 +4,19 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/aureliano/go-brutils/number"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestGerarCPF(t *testing.T) {
-	mpGenRandomDecimalUnit = genRandomDecimalUnit
+	mpGenRandomDecimalUnit = number.GerarUnidadeDecimal
 
 	cpf, _ := gerarCPF()
 	assert.Regexp(t, cpfNumeralRegex, cpf)
 }
 
 func TestGerarCPFParaUF(t *testing.T) {
-	mpGenRandomDecimalUnit = genRandomDecimalUnit
+	mpGenRandomDecimalUnit = number.GerarUnidadeDecimal
 
 	cpf, _ := gerarCPFParaUF("")
 	assert.Regexp(t, cpfNumeralRegex, cpf)
@@ -28,7 +29,7 @@ func TestGerarCPFParaUF(t *testing.T) {
 }
 
 func TestGerarCPFParaUFErroGeracaoNumBase(t *testing.T) {
-	mpGenRandomDecimalUnit = genRandomDecimalUnit
+	mpGenRandomDecimalUnit = number.GerarUnidadeDecimal
 	mpGerarNumeroBaseCPF = func() ([]int, error) { return nil, ErrGeracaoCPF }
 
 	_, err := gerarCPFParaUF("mg")
@@ -38,7 +39,7 @@ func TestGerarCPFParaUFErroGeracaoNumBase(t *testing.T) {
 }
 
 func TestGerarCPFParaUFErroCodRecFiscal(t *testing.T) {
-	mpGenRandomDecimalUnit = genRandomDecimalUnit
+	mpGenRandomDecimalUnit = number.GerarUnidadeDecimal
 	mpGerarNumeroBaseCPF = gerarNumeroBaseCPF
 	mpGerarCodigoRegiaoFiscal = func(uf string) (int, error) { return -1, ErrGeracaoCPF }
 
@@ -169,7 +170,7 @@ func TestGerarNumeroBaseErro(t *testing.T) {
 	_, err := gerarNumeroBaseCPF()
 	assert.ErrorIs(t, err, ErrGeracaoCPF)
 
-	mpGenRandomDecimalUnit = genRandomDecimalUnit
+	mpGenRandomDecimalUnit = number.GerarUnidadeDecimal
 }
 
 func TestGerarCodigoRegiaoFiscalErro(t *testing.T) {
@@ -178,7 +179,7 @@ func TestGerarCodigoRegiaoFiscalErro(t *testing.T) {
 	_, err := gerarCodigoRegiaoFiscal("")
 	assert.ErrorIs(t, err, ErrGeracaoCPF)
 
-	mpGenRandomDecimalUnit = genRandomDecimalUnit
+	mpGenRandomDecimalUnit = number.GerarUnidadeDecimal
 }
 
 func TestGerarDigitosVerificadores(t *testing.T) {

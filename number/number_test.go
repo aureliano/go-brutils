@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestExtractNumber(t *testing.T) {
+func TestExtrairNumeros(t *testing.T) {
 	type testCase struct {
 		name     string
 		input    string
@@ -23,8 +23,16 @@ func TestExtractNumber(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			actual := number.ExtractNumber(tc.input)
+			actual := number.ExtrairNumeros(tc.input)
 			assert.Equal(t, tc.expected, actual)
 		})
+	}
+}
+
+func TestGerarUnidadeDecimal(t *testing.T) {
+	for i := 0; i < 100; i++ {
+		ud, _ := number.GerarUnidadeDecimal()
+		assert.True(t, ud >= 0)
+		assert.True(t, ud < 10)
 	}
 }

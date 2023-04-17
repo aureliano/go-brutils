@@ -2,9 +2,7 @@ package rfb
 
 import (
 	"bytes"
-	"crypto/rand"
 	"fmt"
-	"math/big"
 	"regexp"
 	"strconv"
 	"strings"
@@ -14,7 +12,7 @@ import (
 
 type CPF string
 
-var mpGenRandomDecimalUnit = genRandomDecimalUnit
+var mpGenRandomDecimalUnit = number.GerarUnidadeDecimal
 var mpGerarNumeroBaseCPF = gerarNumeroBaseCPF
 var mpGerarCodigoRegiaoFiscal = gerarCodigoRegiaoFiscal
 var cpfNumeralRegex = regexp.MustCompile(`^\d{11}$`)
@@ -83,7 +81,7 @@ func formatarCPF(cpf CPF) string {
 
 func desformatarCPF(cpf CPF) string {
 	scpf := string(cpf)
-	return number.ExtractNumber(scpf)
+	return number.ExtrairNumeros(scpf)
 }
 
 func writeCPF(base []int, rf, dv1, dv2 int) string {
@@ -184,11 +182,4 @@ func recuperarNumeroBase(cpf string) ([]int, int) {
 	}
 
 	return base, rf
-}
-
-func genRandomDecimalUnit() (int, error) {
-	const maxNum = 10
-	n, err := rand.Int(rand.Reader, big.NewInt(maxNum))
-
-	return int(n.Int64()), err
 }
