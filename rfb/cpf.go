@@ -5,6 +5,7 @@ import (
 	"crypto/rand"
 	"fmt"
 	"math/big"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -16,6 +17,7 @@ type CPF string
 var mpGenRandomDecimalUnit = genRandomDecimalUnit
 var mpGerarNumeroBase = gerarNumeroBase
 var mpGerarCodigoRegiaoFiscal = gerarCodigoRegiaoFiscal
+var cpfNumeralRegex = regexp.MustCompile(`^\d{11}$`)
 
 const cpfSize = 11
 const numBaseSize = 9
@@ -50,7 +52,7 @@ func newCPF(numBase uint) CPF {
 }
 
 func cpfValido(cpf CPF) bool {
-	if len(cpf) != cpfSize {
+	if !cpfNumeral(cpf) {
 		return false
 	}
 
@@ -63,6 +65,10 @@ func cpfValido(cpf CPF) bool {
 	edv2, _ := strconv.Atoi(strCpf[10:11])
 
 	return (edv1 == dv1) && (edv2 == dv2)
+}
+
+func cpfNumeral(cpf CPF) bool {
+	return cpfNumeralRegex.MatchString(string(cpf))
 }
 
 func formatarCPF(cpf CPF) string {

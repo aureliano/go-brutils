@@ -59,4 +59,16 @@ func TestNumeroBase(t *testing.T) {
 	actual = cpf.NumeroBase()
 
 	assert.Equal(t, expected, actual)
+
+	cpf = rfb.CPF("")
+	expected = uint(0)
+	actual = cpf.NumeroBase()
+
+	assert.Equal(t, expected, actual)
+
+	cpf = rfb.CPF("a1111122223")
+	expected = uint(0)
+	actual = cpf.NumeroBase()
+
+	assert.Equal(t, expected, actual)
 }

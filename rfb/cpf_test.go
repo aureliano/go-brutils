@@ -11,17 +11,17 @@ func TestGerarCPF(t *testing.T) {
 	mpGenRandomDecimalUnit = genRandomDecimalUnit
 
 	cpf, _ := gerarCPF()
-	assert.Regexp(t, `^\d{11}$`, cpf)
+	assert.Regexp(t, cpfNumeralRegex, cpf)
 }
 
 func TestGerarCPFParaUF(t *testing.T) {
 	mpGenRandomDecimalUnit = genRandomDecimalUnit
 
 	cpf, _ := gerarCPFParaUF("")
-	assert.Regexp(t, `^\d{11}$`, cpf)
+	assert.Regexp(t, cpfNumeralRegex, cpf)
 
 	cpf, _ = gerarCPFParaUF("mg")
-	assert.Regexp(t, `^\d{11}$`, cpf)
+	assert.Regexp(t, cpfNumeralRegex, cpf)
 
 	_, err := gerarCPFParaUF("br")
 	assert.ErrorIs(t, err, ErrUFDesconhecida)

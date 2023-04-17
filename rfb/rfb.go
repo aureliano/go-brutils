@@ -36,6 +36,10 @@ func NewCPF(numbBase uint) CPF {
 }
 
 func (cpf CPF) NumeroBase() uint {
+	if !cpfNumeral(cpf) {
+		return 0
+	}
+
 	base, rf := recuperarNumeroBase(string(cpf))
 
 	var b bytes.Buffer
