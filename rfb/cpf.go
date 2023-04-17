@@ -18,6 +18,7 @@ var mpGerarNumeroBase = gerarNumeroBase
 var mpGerarCodigoRegiaoFiscal = gerarCodigoRegiaoFiscal
 
 const cpfSize = 11
+const numBaseSize = 9
 
 func gerarCPF() (CPF, error) {
 	return gerarCPFParaUF("")
@@ -40,19 +41,8 @@ func gerarCPFParaUF(uf string) (CPF, error) {
 }
 
 func newCPF(numBase uint) CPF {
-	const maxDigitos = 9
-	base := fmt.Sprintf("%09d", numBase)[:maxDigitos]
-	ibase := make([]int, maxDigitos-1)
-	rf := -1
-
-	for i, n := range strings.Split(base, "") {
-		v, _ := strconv.Atoi(n)
-		if i == maxDigitos-1 {
-			rf = v
-		} else {
-			ibase[i] = v
-		}
-	}
+	base := fmt.Sprintf("%09d", numBase)[:numBaseSize]
+	ibase, rf := recuperarNumeroBase(base)
 
 	dv1, dv2 := gerarDigitosVerificadores(ibase, rf)
 
@@ -60,24 +50,12 @@ func newCPF(numBase uint) CPF {
 }
 
 func cpfValido(cpf CPF) bool {
-	const maxNumBase = 9
-
 	if len(cpf) != cpfSize {
 		return false
 	}
 
 	strCpf := string(cpf)
-	base := make([]int, maxNumBase-1)
-	rf := -1
-
-	for i, n := range strings.Split(strCpf, "")[:maxNumBase] {
-		v, _ := strconv.Atoi(n)
-		if i == maxNumBase-1 {
-			rf = v
-		} else {
-			base[i] = v
-		}
-	}
+	base, rf := recuperarNumeroBase(strCpf)
 
 	dv1, dv2 := gerarDigitosVerificadores(base, rf)
 
@@ -184,6 +162,22 @@ func gerarDigitosVerificadores(base []int, rf int) (int, int) {
 	}
 
 	return dv1, dv2
+}
+
+func recuperarNumeroBase(cpf string) ([]int, int) {
+	base := make([]int, numBaseSize-1)
+	rf := -1
+
+	for i, n := range strings.Split(cpf, "")[:numBaseSize] {
+		v, _ := strconv.Atoi(n)
+		if i == numBaseSize-1 {
+			rf = v
+		} else {
+			base[i] = v
+		}
+	}
+
+	return base, rf
 }
 
 func genRandomDecimalUnit() (int, error) {
