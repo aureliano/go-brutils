@@ -59,6 +59,16 @@ func cnpjNumeral(cnpj CNPJ) bool {
 	return cnpjNumeralRegex.MatchString(string(cnpj))
 }
 
+func formatarCNPJ(cnpj CNPJ) string {
+	scnpj := string(cnpj)
+
+	if len(cnpj) != cnpjSize {
+		return scnpj
+	}
+
+	return fmt.Sprintf("%s.%s.%s/%s-%s", scnpj[0:2], scnpj[2:5], scnpj[5:8], scnpj[8:12], scnpj[12:14])
+}
+
 func writeCNPJ(base []int, dv1, dv2 int) string {
 	var b bytes.Buffer
 	for _, d := range base {

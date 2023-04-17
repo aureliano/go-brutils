@@ -64,6 +64,20 @@ func TestCnpjValido(t *testing.T) {
 	assert.True(t, cnpjValido("60696837000149"))
 }
 
+func TestFormatarCNPJ(t *testing.T) {
+	fmtd := formatarCNPJ("56459955000166")
+	assert.Equal(t, "56.459.955/0001-66", fmtd)
+
+	fmtd = formatarCNPJ("40386877000187")
+	assert.Equal(t, "40.386.877/0001-87", fmtd)
+
+	fmtd = formatarCNPJ("12")
+	assert.Equal(t, "12", fmtd)
+
+	fmtd = formatarCNPJ("65004940000102")
+	assert.Equal(t, "65.004.940/0001-02", fmtd)
+}
+
 func TestGerarNumeroBaseCNPJErro(t *testing.T) {
 	mpGerarUnidadeDecimalCNPJ = func() (int, error) { return -1, fmt.Errorf("any error") }
 
