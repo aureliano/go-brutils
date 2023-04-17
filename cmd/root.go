@@ -27,6 +27,7 @@ func NewRootCommand() *cobra.Command {
 
 	cmd.CompletionOptions.DisableDefaultCmd = true
 	cmd.AddCommand(newCPFCommand())
+	cmd.AddCommand(newCNPJCommand())
 
 	return cmd
 }
