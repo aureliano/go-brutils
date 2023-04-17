@@ -72,3 +72,19 @@ func TestNumeroBase(t *testing.T) {
 
 	assert.Equal(t, expected, actual)
 }
+
+func TestDigitosVerificadores(t *testing.T) {
+	cpf := rfb.CPF("12345678954")
+	edv1, edv2 := 5, 4
+	dv1, dv2 := cpf.DigitosVerificadores()
+
+	assert.Equal(t, edv1, dv1)
+	assert.Equal(t, edv2, dv2)
+
+	cpf = rfb.CPF("345678954")
+	edv1, edv2 = -1, -1
+	dv1, dv2 = cpf.DigitosVerificadores()
+
+	assert.Equal(t, edv1, dv1)
+	assert.Equal(t, edv2, dv2)
+}

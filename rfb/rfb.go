@@ -7,7 +7,7 @@ import (
 
 type CPFInt interface {
 	NumeroBase() uint
-	CodigoVerificador() uint
+	DigitosVerificadores() (int, int)
 	Estado() *Estado
 	Valido() bool
 	Formatado() string
@@ -51,4 +51,17 @@ func (cpf CPF) NumeroBase() uint {
 	num, _ := strconv.Atoi(b.String())
 
 	return uint(num)
+}
+
+func (cpf CPF) DigitosVerificadores() (int, int) {
+	if !cpfNumeral(cpf) {
+		return -1, -1
+	}
+
+	scpf := string(cpf)
+
+	dv1, _ := strconv.Atoi(scpf[9:10])
+	dv2, _ := strconv.Atoi(scpf[10:11])
+
+	return dv1, dv2
 }
