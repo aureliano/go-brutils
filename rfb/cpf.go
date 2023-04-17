@@ -15,19 +15,19 @@ import (
 type CPF string
 
 var mpGenRandomDecimalUnit = genRandomDecimalUnit
-var mpGerarNumeroBase = gerarNumeroBase
+var mpGerarNumeroBaseCPF = gerarNumeroBaseCPF
 var mpGerarCodigoRegiaoFiscal = gerarCodigoRegiaoFiscal
 var cpfNumeralRegex = regexp.MustCompile(`^\d{11}$`)
 
 const cpfSize = 11
-const numBaseSize = 9
+const cpfNumBaseSize = 9
 
 func gerarCPF() (CPF, error) {
 	return gerarCPFParaUF("")
 }
 
 func gerarCPFParaUF(uf string) (CPF, error) {
-	base, err := mpGerarNumeroBase()
+	base, err := mpGerarNumeroBaseCPF()
 	if err != nil {
 		return "", err
 	}
@@ -37,16 +37,16 @@ func gerarCPFParaUF(uf string) (CPF, error) {
 		return "", err
 	}
 
-	dv1, dv2 := gerarDigitosVerificadores(base, rf)
+	dv1, dv2 := gerarDigitosVerificadoresCPF(base, rf)
 
 	return CPF(writeCPF(base, rf, dv1, dv2)), nil
 }
 
 func newCPF(numBase uint) CPF {
-	base := fmt.Sprintf("%09d", numBase)[:numBaseSize]
+	base := fmt.Sprintf("%09d", numBase)[:cpfNumBaseSize]
 	ibase, rf := recuperarNumeroBase(base)
 
-	dv1, dv2 := gerarDigitosVerificadores(ibase, rf)
+	dv1, dv2 := gerarDigitosVerificadoresCPF(ibase, rf)
 
 	return CPF(writeCPF(ibase, rf, dv1, dv2))
 }
@@ -59,7 +59,7 @@ func cpfValido(cpf CPF) bool {
 	strCpf := string(cpf)
 	base, rf := recuperarNumeroBase(strCpf)
 
-	dv1, dv2 := gerarDigitosVerificadores(base, rf)
+	dv1, dv2 := gerarDigitosVerificadoresCPF(base, rf)
 
 	edv1, _ := strconv.Atoi(strCpf[9:10])
 	edv2, _ := strconv.Atoi(strCpf[10:11])
@@ -99,7 +99,7 @@ func writeCPF(base []int, rf, dv1, dv2 int) string {
 	return b.String()
 }
 
-func gerarNumeroBase() ([]int, error) {
+func gerarNumeroBaseCPF() ([]int, error) {
 	digitos := 8
 	num := make([]int, digitos)
 
@@ -134,7 +134,7 @@ func gerarCodigoRegiaoFiscal(uf string) (int, error) {
 	return estado.RegiaoFiscal, nil
 }
 
-func gerarDigitosVerificadores(base []int, rf int) (int, int) {
+func gerarDigitosVerificadoresCPF(base []int, rf int) (int, int) {
 	sum := 0
 	const baseSize = 8
 	const maxUnit = 9
@@ -171,12 +171,12 @@ func gerarDigitosVerificadores(base []int, rf int) (int, int) {
 }
 
 func recuperarNumeroBase(cpf string) ([]int, int) {
-	base := make([]int, numBaseSize-1)
+	base := make([]int, cpfNumBaseSize-1)
 	rf := -1
 
-	for i, n := range strings.Split(cpf, "")[:numBaseSize] {
+	for i, n := range strings.Split(cpf, "")[:cpfNumBaseSize] {
 		v, _ := strconv.Atoi(n)
-		if i == numBaseSize-1 {
+		if i == cpfNumBaseSize-1 {
 			rf = v
 		} else {
 			base[i] = v

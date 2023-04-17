@@ -29,17 +29,17 @@ func TestGerarCPFParaUF(t *testing.T) {
 
 func TestGerarCPFParaUFErroGeracaoNumBase(t *testing.T) {
 	mpGenRandomDecimalUnit = genRandomDecimalUnit
-	mpGerarNumeroBase = func() ([]int, error) { return nil, ErrGeracaoCPF }
+	mpGerarNumeroBaseCPF = func() ([]int, error) { return nil, ErrGeracaoCPF }
 
 	_, err := gerarCPFParaUF("mg")
 	assert.ErrorIs(t, err, ErrGeracaoCPF)
 
-	mpGerarNumeroBase = gerarNumeroBase
+	mpGerarNumeroBaseCPF = gerarNumeroBaseCPF
 }
 
 func TestGerarCPFParaUFErroCodRecFiscal(t *testing.T) {
 	mpGenRandomDecimalUnit = genRandomDecimalUnit
-	mpGerarNumeroBase = gerarNumeroBase
+	mpGerarNumeroBaseCPF = gerarNumeroBaseCPF
 	mpGerarCodigoRegiaoFiscal = func(uf string) (int, error) { return -1, ErrGeracaoCPF }
 
 	_, err := gerarCPFParaUF("mg")
@@ -166,7 +166,7 @@ func TestDesformatarCPF(t *testing.T) {
 func TestGerarNumeroBaseErro(t *testing.T) {
 	mpGenRandomDecimalUnit = func() (int, error) { return -1, fmt.Errorf("any error") }
 
-	_, err := gerarNumeroBase()
+	_, err := gerarNumeroBaseCPF()
 	assert.ErrorIs(t, err, ErrGeracaoCPF)
 
 	mpGenRandomDecimalUnit = genRandomDecimalUnit
@@ -182,11 +182,11 @@ func TestGerarCodigoRegiaoFiscalErro(t *testing.T) {
 }
 
 func TestGerarDigitosVerificadores(t *testing.T) {
-	dv1, dv2 := gerarDigitosVerificadores([]int{4, 9, 9, 9, 9, 9, 9, 9}, 6)
+	dv1, dv2 := gerarDigitosVerificadoresCPF([]int{4, 9, 9, 9, 9, 9, 9, 9}, 6)
 	assert.Equal(t, 0, dv1)
 	assert.Equal(t, 3, dv2)
 
-	dv1, dv2 = gerarDigitosVerificadores([]int{1, 2, 3, 4, 5, 6, 7, 1}, 6)
+	dv1, dv2 = gerarDigitosVerificadoresCPF([]int{1, 2, 3, 4, 5, 6, 7, 1}, 6)
 	assert.Equal(t, 4, dv1)
 	assert.Equal(t, 5, dv2)
 }
