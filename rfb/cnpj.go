@@ -15,6 +15,7 @@ type CNPJ string
 var mpGerarUnidadeDecimalCNPJ = number.GerarUnidadeDecimal
 var mpGerarNumeroBaseCNPJ = gerarNumeroBaseCNPJ
 var cnpjNumeralRegex = regexp.MustCompile(`^\d{14}$`)
+var cnpjFormatadoRegex = regexp.MustCompile(`^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$`)
 
 const cnpjSize = 14
 const cnpjNumBaseSize = cnpjSize - 2
@@ -37,6 +38,19 @@ func newCNPJ(numBase uint) CNPJ {
 	dv1, dv2 := gerarDigitosVerificadoresCNPJ(ibase)
 
 	return CNPJ(writeCNPJ(ibase, dv1, dv2))
+}
+
+func newCNPJFromStr(str string) (CNPJ, error) {
+	if cnpjFormatadoRegex.MatchString(str) {
+		nums := number.ExtrairNumeros(str)
+		return CNPJ(nums), nil
+	}
+
+	if !cnpjNumeral(CNPJ(str)) {
+		return "", ErrCNPJInvalido
+	}
+
+	return CNPJ(str), nil
 }
 
 func cnpjValido(cnpj CNPJ) bool {

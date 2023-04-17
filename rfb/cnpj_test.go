@@ -48,6 +48,30 @@ func TestNewCNPJ(t *testing.T) {
 	}
 }
 
+func TestNewCNPJFromStr(t *testing.T) {
+	type testCase struct {
+		name     string
+		input    string
+		expected CNPJ
+	}
+	testCases := []testCase{
+		{name: "CNPJ sem formatação", input: "98112328000285", expected: "98112328000285"},
+		{name: "CNPJ com formatação", input: "79.380.500/0021-08", expected: "79380500002108"},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			actual, _ := newCNPJFromStr(tc.input)
+			assert.Equal(t, tc.expected, actual)
+		})
+	}
+}
+
+func TestNewCNPJFromStrErro(t *testing.T) {
+	_, err := newCNPJFromStr("123")
+	assert.ErrorIs(t, err, ErrCNPJInvalido)
+}
+
 func TestCnpjValido(t *testing.T) {
 	assert.False(t, cnpjValido("123"))
 	assert.False(t, cnpjValido("123987987988878"))
