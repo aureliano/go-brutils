@@ -46,3 +46,17 @@ func TestNewCPF(t *testing.T) {
 	cpf := rfb.NewCPF(1234)
 	assert.Equal(t, rfb.CPF("00000123439"), cpf)
 }
+
+func TestNumeroBase(t *testing.T) {
+	cpf := rfb.CPF("12345678900")
+	expected := uint(123456789)
+	actual := cpf.NumeroBase()
+
+	assert.Equal(t, expected, actual)
+
+	cpf = rfb.CPF("00005678900")
+	expected = uint(56789)
+	actual = cpf.NumeroBase()
+
+	assert.Equal(t, expected, actual)
+}
