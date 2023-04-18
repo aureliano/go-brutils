@@ -26,7 +26,7 @@ func NewRootCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   project.binName,
 		Short: "Utilitário para negócios específicos do Brasil",
-		Long:  "Aplicação para uso das funções providas pela biblioteca go-brutils.",
+		Long:  fmt.Sprintf("Aplicação para uso das funções providas pela biblioteca %s.", project.name),
 		Run: func(cmd *cobra.Command, args []string) {
 			exibirVersao(cmd)
 		},
