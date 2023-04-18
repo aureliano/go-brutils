@@ -22,7 +22,7 @@ func newCPFCommand() *cobra.Command {
 		},
 	}
 
-	cmd.AddCommand(newGerarCPFCommand())
+	cmd.AddCommand(newGerarCNPJCommand())
 	cmd.AddCommand(newCompletarCPFCommand())
 	cmd.AddCommand(newValidarCPFCommand())
 
