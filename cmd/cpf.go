@@ -32,7 +32,7 @@ func newCPFCommand() *cobra.Command {
 func newGerarCPFCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "gerar",
-		Short: "Gerar um número de CPF",
+		Short: "Gera um número de CPF",
 		Long:  "Aciona funcionalidade para geração de um número de CPF.",
 		Example: fmt.Sprintf(`  # Gerar um CPF de um Estado/Região Fiscal tomado aleatoriamente.
 		%s cpf gerar
@@ -53,7 +53,7 @@ func newGerarCPFCommand() *cobra.Command {
 func newCompletarCPFCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "completar",
-		Short: "Completar um número de CPF",
+		Short: "Completa um número de CPF",
 		Long: "Completa um número de CPF, ora preenchendo com zeros a esquerda " +
 			"ora preenchendo os dígitos verificadores.",
 		Example: fmt.Sprintf(`  %s cpf completar 1981621`, project.binName),
@@ -70,8 +70,8 @@ func newCompletarCPFCommand() *cobra.Command {
 func newValidarCPFCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "validar",
-		Short: "Validar um número de CPF",
-		Long:  "Validar um número de CPF.",
+		Short: "Valida um número de CPF",
+		Long:  "Valida um número de CPF.",
 		Example: fmt.Sprintf(`  # Validar um número de CPF sem máscara.
   %s cpf validar 00198162197
   
