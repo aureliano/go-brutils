@@ -16,7 +16,7 @@ func newCPFCommand() *cobra.Command {
 		Long:  "Aciona funcionalidades para manipulação de CPF.",
 		Example: fmt.Sprintf(`  %s cpf gerar     [flags]
   %s cpf completar [flags]
-  %s cpf validar   [flags]`, project.binName, project.binName, project.binName),
+  %s cpf validar`, project.binName, project.binName, project.binName),
 		Run: func(cmd *cobra.Command, args []string) {
 			_ = cmd.Help()
 		},
@@ -24,6 +24,7 @@ func newCPFCommand() *cobra.Command {
 
 	cmd.AddCommand(newGerarCPFCommand())
 	cmd.AddCommand(newCompletarCPFCommand())
+	cmd.AddCommand(newValidarCPFCommand())
 
 	return cmd
 }
@@ -55,14 +56,31 @@ func newCompletarCPFCommand() *cobra.Command {
 		Short: "Completar um número de CPF",
 		Long: "Completa um número de CPF, ora preenchendo com zeros a esquerda " +
 			"ora preenchendo os dígitos verificadores.",
-		Example: fmt.Sprintf(`  # Gerar um CPF de um Estado/Região Fiscal tomado aleatoriamente.
-		%s cpf completar 1981621`, project.binName),
+		Example: fmt.Sprintf(`  %s cpf completar 1981621`, project.binName),
 		Run: func(cmd *cobra.Command, args []string) {
 			completarNumeroCPF(cmd, args)
 		},
 	}
 
 	cmd.Flags().BoolP("formatar", "f", false, "Formatar a saída com a máscara ###.###.###-##")
+
+	return cmd
+}
+
+func newValidarCPFCommand() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "validar",
+		Short: "Validar um número de CPF",
+		Long:  "Validar um número de CPF.",
+		Example: fmt.Sprintf(`  # Validar um número de CPF sem máscara.
+  %s cpf validar 00198162197
+  
+  # Validar um número de CPF com máscara.
+  %s cpf validar 001.981.621-97`, project.binName, project.binName),
+		Run: func(cmd *cobra.Command, args []string) {
+			validarNumeroCPF(cmd, args)
+		},
+	}
 
 	return cmd
 }
@@ -119,5 +137,28 @@ func completarNumeroCPF(cmd *cobra.Command, args []string) {
 		fmt.Println(cpf.Formatado())
 	} else {
 		fmt.Println(cpf.Desformatado())
+	}
+}
+
+func validarNumeroCPF(cmd *cobra.Command, args []string) {
+	if len(args) == 0 {
+		cmd.Help()
+		fmt.Println()
+		log.Fatalln("Esperava o número do CPF a ser validado.")
+	} else if len(args) > 1 {
+		cmd.Help()
+		fmt.Println()
+		log.Fatalln("Esperava apenas um número de entrada.")
+	}
+
+	cpf, err := rfb.NewCPFFromStr(args[0])
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	if cpf.Valido() {
+		fmt.Println("CPF válido.")
+	} else {
+		fmt.Println("CPF INválido!")
 	}
 }
