@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/aureliano/go-brutils/rfb"
 	"github.com/spf13/cobra"
@@ -22,6 +23,7 @@ func newCPFCommand() *cobra.Command {
 	}
 
 	cmd.AddCommand(newGerarCPFCommand())
+	cmd.AddCommand(newCompletarCPFCommand())
 
 	return cmd
 }
@@ -47,6 +49,25 @@ func newGerarCPFCommand() *cobra.Command {
 	return cmd
 }
 
+func newCompletarCPFCommand() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "completar",
+		Short: "Completar um número de CPF",
+		Long: "Completa um número de CPF, ora preenchendo com zeros a esquerda " +
+			"ora preenchendo os dígitos verificadores.",
+		Example: fmt.Sprintf(`  # Gerar um CPF de um Estado/Região Fiscal tomado aleatoriamente.
+		%s cpf completar 1981621`, project.binName),
+		Run: func(cmd *cobra.Command, args []string) {
+			completarNumeroCPF(cmd, args)
+		},
+	}
+
+	cmd.Flags().BoolP("formatar", "f", false, "Formatar a saída com a máscara ###.###.###-##")
+	cmd.Flags().UintP("numero", "n", 0, "Número base do CPF")
+
+	return cmd
+}
+
 func gerarNumeroCPF(cmd *cobra.Command) {
 	formatar, _ := cmd.Flags().GetBool("formatar")
 	estado, _ := cmd.Flags().GetString("estado")
@@ -65,6 +86,35 @@ func gerarNumeroCPF(cmd *cobra.Command) {
 			log.Fatalln(err)
 		}
 	}
+
+	if formatar {
+		fmt.Println(cpf.Formatado())
+	} else {
+		fmt.Println(cpf.Desformatado())
+	}
+}
+
+func completarNumeroCPF(cmd *cobra.Command, args []string) {
+	formatar, _ := cmd.Flags().GetBool("formatar")
+
+	if len(args) == 0 {
+		cmd.Help()
+		fmt.Println()
+		log.Fatalln("Esperava um número inteiro >= 0.")
+	} else if len(args) > 1 {
+		cmd.Help()
+		fmt.Println()
+		log.Fatalln("Esperava apenas um número de entrada.")
+	}
+
+	numero, err := strconv.Atoi(args[0])
+	if err != nil {
+		log.Fatalf("%s não é um número válido.\n", args[0])
+	} else if numero == 0 {
+		log.Fatalln("Esperava um número inteiro >= 0.")
+	}
+
+	cpf := rfb.NewCPF(uint(numero))
 
 	if formatar {
 		fmt.Println(cpf.Formatado())
