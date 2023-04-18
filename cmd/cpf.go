@@ -63,7 +63,6 @@ func newCompletarCPFCommand() *cobra.Command {
 	}
 
 	cmd.Flags().BoolP("formatar", "f", false, "Formatar a saída com a máscara ###.###.###-##")
-	cmd.Flags().UintP("numero", "n", 0, "Número base do CPF")
 
 	return cmd
 }
