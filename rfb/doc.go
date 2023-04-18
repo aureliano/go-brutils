@@ -20,7 +20,7 @@ Interface para manipulação de números identificadores da RFB.
 # Iniciação dos NIs
 
 Para cada NI há um tipo personalizado. A iniciação desses tipos deve ser feita através das funções adequadas.
-Há duas formas de obter um NI: passando o número base (um inteiro não negativo) ou passando o número completo
+Há duas formas de se obter um NI: passando o número base (um inteiro não negativo) ou passando o número completo
 como string com ou sem máscara.
 
 	// Passando o número base do CPF "000.001.234-39".
