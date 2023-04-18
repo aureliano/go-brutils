@@ -1,4 +1,11 @@
 # go-brutils
+
+[![CI Pipeline](https://github.com/aureliano/go-brutils/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/aureliano/go-brutils/actions/workflows/build.yml?query=branch%3Amain)
+[![Coverage](https://coveralls.io/repos/github/aureliano/go-brutils/badge.svg?branch=main)](https://coveralls.io/github/aureliano/go-brutils?branch=main)
+[![go-brutils release (latest SemVer)](https://img.shields.io/github/v/release/aureliano/go-brutils?sort=semver)](https://github.com/aureliano/go-brutils/releases)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/aureliano/go-brutils)](https://pkg.go.dev/github.com/aureliano/go-brutils)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 go-brutils é uma biblioteca que implementa algumas regras de negócio inerentes ao Brasil.
 
 Algumas dessas regras, tais como geração e validação de números identificadores da Receita Federal do Brasil,
