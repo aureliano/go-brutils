@@ -14,3 +14,11 @@ test:
 .PHONY: code-lint
 code-lint:
 	golangci-lint run
+
+.PHONY: snapshot
+snapshot:
+	goreleaser release --snapshot --clean
+
+.PHONY: release
+release:
+	goreleaser release --skip-publish
