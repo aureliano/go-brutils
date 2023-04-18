@@ -5,9 +5,7 @@ builds:
   - id: go-brutils
     binary: brutils
     ldflags:
-      - -s -w -X github.com/aureliano/go-brutils/cmd.project.version={{.Version}}
-      - -X github.com/aureliano/go-brutils/cmd.project.name={{.ProjectName}}
-      - -X github.com/aureliano/go-brutils/cmd.project.binName=brutils
+      - -s -w -X github.com/aureliano/go-brutils/cmd.version={{.Version}}
     env:
       - CGO_ENABLED=0
     goarch:

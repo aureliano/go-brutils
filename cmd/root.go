@@ -14,9 +14,11 @@ type projectInfo struct {
 	binName string
 }
 
+var version = "v0.0.0-dev"
+
 var project = projectInfo{
 	name:    "go-brutils",
-	version: "v0.0.0-dev",
+	version: version,
 	binName: "brutils",
 }
 
@@ -53,7 +55,7 @@ func exibirVersao(cmd *cobra.Command) {
 		osName := runtime.GOOS
 		osArch := runtime.GOARCH
 
-		fmt.Printf("Version:       %s\n", project.version)
+		fmt.Printf("Version:       %s\n", version)
 		fmt.Printf("Go version:    %s\n", goVersion)
 		fmt.Printf("OS/Arch:       %s/%s\n", osName, osArch)
 	} else {
