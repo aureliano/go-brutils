@@ -3,6 +3,7 @@ module github.com/aureliano/go-brutils
 go 1.19
 
 require (
+	github.com/aureliano/caravela v1.0.0
 	github.com/spf13/cobra v1.7.0
 	github.com/stretchr/testify v1.8.2
 )
