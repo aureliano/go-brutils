@@ -6,7 +6,8 @@ foram implementas e exportadas em pacotes específicos do escopo funcional.
 
 # RFB
 
-O pacote rfb possui as funcionalidades próprias da Receita Federal do Brasil. Tais como geração e validação de CPF e CNPJ.
+O pacote rfb possui as funcionalidades próprias da Receita Federal do Brasil. Tais como geração e validação de
+CPF e CNPJ.
 Para mais detalhes, acesse a documentação do pacote rfb.
 
 # Aplicação de linha de comando
