@@ -59,7 +59,7 @@ Existe também suporte a geração de NIs. Para CPF também é possível gerar p
 
 	// Falha na geração de CPF.
 	uf := NewEstado("br")
-	cpf, _ := GerarCPFParaUF(uf)
+	cpf, err := GerarCPFParaUF(uf)
 
 	if errors.Is(err, ErrUFDesconhecida) {
 		// Faz alguma coisa.
@@ -85,7 +85,7 @@ Existe também suporte a geração de NIs. Para CPF também é possível gerar p
 	cpf.Formatado()            // 000.001.234-39
 	cpf.Desformatado()         // 00000123439
 
-CNPJ - Implementação
+# CNPJ - Implementação
 
 	type CNPJ string
 
