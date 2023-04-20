@@ -19,11 +19,26 @@ Para instalar go-brutils, use `go get`:
 
 Ou instale uma versão específica:
 
-`go get github.com/aureliano/go-brutils/v0`
+`go get github.com/aureliano/go-brutils/v1`
 
 Ou mesmo adicione-a como uma dependência do seu módulo:
 
-`require github.com/aureliano/go-brutils v0`
+`require github.com/aureliano/go-brutils v1`
+
+Para instalar a aplicação de linha de comando, caso queira instalar no GOPATH:
+
+`go install github.com/aureliano/go-brutils@v1`
+
+Ficará acessível como `go-brutils`.
+
+Para instalar via GitHub no Linux:
+
+```sh
+curl -OL https://github.com/aureliano/go-brutils/releases/download/v1.0.0/go-brutils_Linux_x86_64.tar.gz
+tar xzf go-brutils_Linux_x86_64.tar.gz
+```
+
+Ficará acessível no diretório corrente como `./brutils`.
 
 ### Fique atualizado
 Para atualizar para a última versão, use `go get -u github.com/aureliano/go-brutils`.
