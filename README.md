@@ -8,8 +8,7 @@
 
 go-brutils é uma biblioteca que implementa algumas regras de negócio inerentes ao Brasil.
 
-Algumas dessas regras, tais como geração e validação de números identificadores da Receita Federal do Brasil,
-foram implementas e exportadas em pacotes específicos do escopo funcional.
+Algumas dessas regras, tais como geração e validação de números identificadores da Receita Federal do Brasil, foram implementas e exportadas em pacotes específicos do escopo funcional.
 
 Atualmente, **go-brutils requer a versão 1.17 ou superior do Go**. Seguimos a política de suporte de versões do Go e fazemos o melhor pra não quebrar as versões mais velhas do Go, mas devido a restrições de ferramentas, nem sempre testamos versões mais antigas.
 
@@ -59,9 +58,7 @@ cpf.Desformatado()         // 00000123439
 
 Algumas das funcionalidades desta biblioteca estarão acessíveis para testes na aplicação de linha de comando. Com efeito, essa aplicação será disponibilizada no binário de fechamento da [release](https://github.com/aureliano/go-brutils/releases).
 
-Em desenvolvimento basta executar o comando `go run main.go help` na raiz do projeto para se ter acesso à ajuda
-do programa. Se quiser usar o binário tal como é disponibilizado no fechamento da release, execute o comando
-`make snapshot` e veja no diretório dist qual é binário da sua distribuição do Sistema Operacional.
+Em desenvolvimento basta executar o comando `go run main.go help` na raiz do projeto para se ter acesso à ajuda do programa. Se quiser usar o binário tal como é disponibilizado no fechamento da release, execute o comando `make snapshot` e veja no diretório dist qual é binário da sua distribuição do Sistema Operacional.
 
 ## Contribuindo
 
