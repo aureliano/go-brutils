@@ -1,5 +1,5 @@
 /*
-O pacote number é um pacote com funcções utilitárias para manipulação de números.
+O pacote number é um pacote com funções utilitárias para manipulação de números.
 
 # ExtrairNumeros
 
@@ -14,9 +14,9 @@ Pode ser usado pra remover máscaras de números cadastrais como CPF e CNPJ.
 
 # GerarUnidadeDecimal
 
-Função para geração aleatória de um número decimal entre zero e nove.
+Função para geração aleatória de um número decimal de zero a nove.
 
 	ud := GerarUnidadeDecimal()
-	fmt.Println(ud) // Saída: um número inteiro entre zero e nove (0-9).
+	fmt.Println(ud) // Saída: um número inteiro de zero a nove (0-9).
 */
 package number
